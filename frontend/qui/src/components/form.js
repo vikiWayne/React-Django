@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Form, Input, Button, Radio } from 'antd';
+import React from 'react';
+import { Form, Input, Button } from 'antd';
 import { Component } from 'react'
 import axios from 'axios';
 
@@ -28,6 +28,7 @@ class CustomForm extends Component {
                 })
                     .then(res => console.log(res))
                     .catch(error => console.log(error));
+            default: return requestType
 
         }
     }

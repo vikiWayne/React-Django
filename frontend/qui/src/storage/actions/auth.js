@@ -33,15 +33,13 @@ export const logOut = () => {
 export const authLogin = (username, password) => {
     return dispatch => {
         dispatch(authStart());
-
-        axios.post('http://localhost:8000/rest-auth/login/', {
-            username: username,
-            password: password
-        })
+        const payload = { username: username, password: password }
+        axios.post('http://localhost:8000/rest-auth/login/', payload)
             .then(res => {
                 const token = res.data.key
                 const expirationDate = new Date(new Date().getTime() + 3600)
                 localStorage.setItem('token', token);
+                localStorage.setItem('expiration', expirationDate);
 
                 dispatch(authSuccess(token))
                 //token is a parameter of authSuccess..
@@ -77,6 +75,7 @@ export const authSignup = (username, email, Password1, Password2) => {
                 const token = res.data.key
                 const expirationDate = new Date(new Date().getTime() + 3600)
                 localStorage.setItem('token', token);
+                localStorage.setItem('expiration', expirationDate)
 
                 dispatch(authSuccess(token))
                 //token is a parameter of authSuccess..

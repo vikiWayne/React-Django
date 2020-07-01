@@ -1,12 +1,12 @@
 import React from 'react';
-import { Input, Button, Spin } from 'antd';
+import { Input, Button, Spin, Form } from 'antd';
 import { NavLink } from 'react-router-dom';
 import Icon from '@ant-design/icons';
 
-import { LoadingOutlined } from '@ant-design/icons';
+// import { LoadingOutlined } from '@ant-design/icons';
 import { connect } from 'react-redux';
-import { Form } from '@ant-design/compatible';
-import { authSignup } from './../../storage/actions/auth';
+// import { Form } from '@ant-design/compatible';
+// import { authSignup } from './../../storage/actions/auth';
 import * as actions from './../../storage/actions/auth';
 
 
@@ -14,7 +14,7 @@ import * as actions from './../../storage/actions/auth';
 
 
 
-const FormItem = Form.Item;
+// const FormItem = Form.Item;
 const antIcon = <Icon type="loading" style={ { fontSize: 24 } } spin />;
 
 
@@ -24,22 +24,22 @@ class RegistrationForm extends React.Component {
     state = {
         confirmDirty: false,
     };
-    handleSubmit = (e) => {
-        e.preventDefault();
-        this.props.form.validateFieldsAndScroll((err, values) => {
-            if (!err) {
-                console.log('Recieved values of form', values);
-                this.props.onAuth(values.username,
-                    values.password,
-                    values.email,
-                    values.confirm
-                );
-            }
-            this.props.history.push('/');
-        });
-
-
-    }//close handle submit
+    handleSubmit = values => {
+        console.log('Success', values);
+        this.props.onAuth(values.username,values.password,values.email,values.confirm);
+    } 
+        // e.preventDefault();
+        // this.props.form.validateFieldsAndScroll((err, values) => {
+        //     if (!err) {
+        //         console.log('Recieved values of form', values);
+        //         this.props.onAuth(values.username,
+        //             values.password,
+        //             values.email,
+        //             values.confirm
+        //         );
+        //     }
+        //     this.props.history.push('/');
+        // });//close handle submit
     handleConfirmBlur = (e) => {
         const value = e.target.value;
         this.setState({
@@ -95,7 +95,7 @@ class RegistrationForm extends React.Component {
                     <Spin indicator={ antIcon } />
                     :
                     <Form   { ...layout }
-                        onSubmitCapture={ this.handleSubmit } className="login-form">
+                        onFinish={ this.handleSubmit } className="login-form">
 
                         <Form.Item style={ { height: '50px' } }>
 
@@ -171,7 +171,7 @@ class RegistrationForm extends React.Component {
         );
     }
 }
-const WrappedNormalLoginForm = Form.create()(RegistrationForm);
+// const WrappedNormalLoginForm = Form.create()(RegistrationForm);
 const mapStateToProps = (state) => {
     return {
         loading: state.loading,
@@ -183,7 +183,7 @@ const mapDispatchToProps = (dispach) => {
         onAuth: (username, email, Password1, Password2) => dispach(actions.authSignup(username, email, Password1, Password2))
     }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(WrappedNormalLoginForm);
+export default connect(mapStateToProps, mapDispatchToProps)(RegistrationForm);
 
 
 

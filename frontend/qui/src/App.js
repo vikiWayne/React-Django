@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import 'antd/dist/antd.css';
 import CustomeLayout from './components/containers/layout';
 
-import ArticleList from './components/containers/ArticleListView';
+// import ArticleList from './components/containers/ArticleListView';
 import BaseRouter from './routes';
 import { BrowserRouter as Router } from 'react-router-dom';
 
@@ -23,7 +22,7 @@ class App extends Component {
       <div id="app">
         <Router>
           <CustomeLayout { ...this.props }>
-            <BaseRouter />
+            <BaseRouter isLoggedIn = { this.props.isAuthenticated } />
           </CustomeLayout>
         </Router>
 

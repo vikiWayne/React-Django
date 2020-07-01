@@ -1,39 +1,53 @@
 import React from 'react';
-import { Input, Button, Spin } from 'antd';
+import { Input, Button, Spin, Form } from 'antd';
 import { NavLink } from 'react-router-dom';
 import Icon from '@ant-design/icons';
 
-import { LoadingOutlined } from '@ant-design/icons';
+// import { LoadingOutlined } from '@ant-design/icons';
 import { connect } from 'react-redux';
-import { Form } from '@ant-design/compatible';
-import { authLogin } from './../../storage/actions/auth';
+// import { Form } from '@ant-design/compatible';
+// import { authLogin } from './../../storage/actions/auth';
 import * as actions from './../../storage/actions/auth';
 
-
-const FormItem = Form.Item;
-const antIcon = <Icon type="loading" style={ { fontSize: 24 } } spin />;
+const antIcon = (
+    <div>
+        <Icon type="loading" style={ { fontSize: 24 } } spin />
+    </div>
+);
 
 
 
 
 class NormalLoginForm extends React.Component {
-    handleSubmit = (e) => {
-        e.preventDefault();
-        this.props.form.validateFields((err, values) => {
-            if (!err) {
-                console.log('Recieved values of form', values);
-                this.props.onAuth(values.username, values.password);
-                this.props.history.push('/');
-            }
 
-        });
+    // handleSubmit = (e) => {
+    //     e.preventDefault();
+    //     this.props.form.validateFields((err, values) => {
+    //         if (!err) {
+    //             alert(values.username, values.password)
+    //             console.log('Recieved values of form', values);
+    //             this.props.onAuth(values.username, values.password);
+    //             // this.props.history.push('/');
+    //         }
+    //         else{
+    //             alert(err)
+    //         }
 
-    }//close handle submit
+    //     });
 
+    // }
+
+    onFinish = values => {
+        console.log('Success', values)
+        this.props.onAuth(values.username, values.password)
+
+    }
+
+    onFinishFailed = errorInfo => {
+        console.log('Failed', errorInfo)
+    }
 
     render() {
-
-
 
         const layout = {
             labelCol: { span: 2 },
@@ -41,19 +55,16 @@ class NormalLoginForm extends React.Component {
             padding: { space: 8 },
 
         };
-        const tailLayout = {
-            wrapperCol: { offset: 8, span: 16 },
-        };
 
+        const tailLayout = { wrapperCol: { offset: 8, span: 16 },};
 
         let errorMessage = null;
+
         if (this.props.error) {
-            errorMessage = (
-                <p>{ this.props.error.message }</p>
-            )
+            errorMessage = <p>{ this.props.error.message }</p>
         }
 
-        const { getFieldDecorator } = this.props.form;
+        // const { getFieldDecorator } = this.props.form;
 
         return (
             <div>
@@ -61,16 +72,13 @@ class NormalLoginForm extends React.Component {
 
                 { this.props.loading ?
                     <Spin indicator={ antIcon } />
-                    :
-
-                    <Form   { ...layout } onSubmitCapture={ this.handleSubmit } className="login-form">
+                    : (<Form   { ...layout } name='loginForm' onFinish={ this.onFinish } onFinishFailed={ this.onFinishFailed } className="login-form">
 
                         <Form.Item
-                            label="Username"
+                            label = "Username"
                             name="username"
-                            style={ { height: '50px' } }
-                            rules={ [{ required: true, message: 'Please input your username!' }] }
-                        >
+                            style={ { height: '50px', marginLeft:'10px' } }
+                            rules={ [{ required: true, message: 'Please input your username!' }] }>
                             <Input />
                         </Form.Item>
 
@@ -78,31 +86,23 @@ class NormalLoginForm extends React.Component {
                             label="Password"
                             name="password"
                             style={ { height: '50px' } }
-                            rules={ [{ required: true, message: 'Please input your password!' }] }
-                        >
+                            rules={ [{ required: true, message: 'Please input your password!' }] }>
                             <Input.Password />
                         </Form.Item>
 
                         <Form.Item { ...tailLayout } style={ { marginRight: '170px' } }>
-                            <Button type="primary" htmlType="submit" >
-                                Login
-                            </Button>
-
-                             Or
-
-                            <NavLink
-
-                                to="/signup">   Signup
-                           </NavLink>
+                            <Button type="primary" htmlType="submit" > Login </Button>
+                            <NavLink to="/signup"> Signup </NavLink>
                         </Form.Item>
-                    </Form >
+                    </Form >)
                 }
 
             </div>
         );
     }
 }
-const WrappedNormalLoginForm = Form.create()(NormalLoginForm);
+// const WrappedNormalLoginForm = Form.create()(NormalLoginForm);
+
 const mapStateToProps = (state) => {
     return {
         loading: state.loading,
@@ -114,7 +114,7 @@ const mapDispatchToProps = (dispach) => {
         onAuth: (username, password) => dispach(actions.authLogin(username, password))
     }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(WrappedNormalLoginForm);
+export default connect(mapStateToProps, mapDispatchToProps)(NormalLoginForm);
 
 
 

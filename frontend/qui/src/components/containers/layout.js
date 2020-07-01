@@ -4,7 +4,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { Layout, Menu, Breadcrumb } from 'antd';
 
 import { connect } from 'react-redux';
-import { logOut } from './../../storage/actions/auth';
+// import { logOut } from './../../storage/actions/auth';
 import * as actions from './../../storage/actions/auth';
 
 
@@ -21,11 +21,9 @@ class customeLayout extends React.Component {
                     <Menu theme="dark" mode="horizontal" defaultSelectedKeys={ ['2'] }>
 
                         {
-                            this.props.isAuthenticated ?
-
-                                <Menu.Item key="1" onClick={ this.props.logout }>
-                                    Logout</Menu.Item>
-                                :
+                            this.props.isAuthenticated ? 
+                                <Menu.Item key="1" onClick={ this.props.logout }>Logout</Menu.Item>
+                            :
                                 <Menu.Item key="1"><Link to="/login">Login</Link></Menu.Item>
 
                         }
