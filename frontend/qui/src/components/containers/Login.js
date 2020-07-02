@@ -1,11 +1,10 @@
 import React from 'react';
-import { Input, Button, Spin } from 'antd';
+import { Input, Button, Spin, Form } from 'antd';
 import { NavLink } from 'react-router-dom';
 import Icon from '@ant-design/icons';
 
 import { LoadingOutlined } from '@ant-design/icons';
 import { connect } from 'react-redux';
-import { Form } from '@ant-design/compatible';
 import { authLogin } from './../../storage/actions/auth';
 import * as actions from './../../storage/actions/auth';
 
@@ -17,18 +16,28 @@ const antIcon = <Icon type="loading" style={ { fontSize: 24 } } spin />;
 
 
 class NormalLoginForm extends React.Component {
-    handleSubmit = (e) => {
-        e.preventDefault();
-        this.props.form.validateFields((err, values) => {
-            if (!err) {
-                console.log('Recieved values of form', values);
-                this.props.onAuth(values.username, values.password);
-                this.props.history.push('/');
-            }
+    // handleSubmit = (e) => {
+    //     e.preventDefault();
+    //     this.props.form.validateFields((err, values) => {
+    //         if (values != "") {
+    //             console.log('Recieved values of form', values);
+    //             this.props.onAuth(values.username, values.password);
+    //             this.props.history.push('/');
+    //         }
 
-        });
+    //     });
 
-    }//close handle submit
+    //}//close handle submit
+    onFinish = values => {
+        console.log('Success', values);
+        this.props.onAuth(values.username, values.password)
+        this.props.history.push('/');
+
+    }
+
+    onFinishFailed = errorInfo => {
+        console.log('Failed', errorInfo)
+    }
 
 
     render() {
@@ -53,7 +62,7 @@ class NormalLoginForm extends React.Component {
             )
         }
 
-        const { getFieldDecorator } = this.props.form;
+        // const { getFieldDecorator } = this.props.form;
 
         return (
             <div>
@@ -63,7 +72,7 @@ class NormalLoginForm extends React.Component {
                     <Spin indicator={ antIcon } />
                     :
 
-                    <Form   { ...layout } onSubmitCapture={ this.handleSubmit } className="login-form">
+                    <Form   { ...layout } name='loginForm' onFinish={ this.onFinish } onFinishFailed={ this.onFinishFailed } className="login-form">
 
                         <Form.Item
                             label="Username"
@@ -102,7 +111,7 @@ class NormalLoginForm extends React.Component {
         );
     }
 }
-const WrappedNormalLoginForm = Form.create()(NormalLoginForm);
+
 const mapStateToProps = (state) => {
     return {
         loading: state.loading,
@@ -114,7 +123,7 @@ const mapDispatchToProps = (dispach) => {
         onAuth: (username, password) => dispach(actions.authLogin(username, password))
     }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(WrappedNormalLoginForm);
+export default connect(mapStateToProps, mapDispatchToProps)(NormalLoginForm);
 
 
 

@@ -41,7 +41,9 @@ export const authLogin = (username, password) => {
             .then(res => {
                 const token = res.data.key
                 const expirationDate = new Date(new Date().getTime() + 3600)
+                console.log(expirationDate);
                 localStorage.setItem('token', token);
+                console.log(localStorage.setItem('token', token));
 
                 dispatch(authSuccess(token))
                 //token is a parameter of authSuccess..
@@ -67,7 +69,7 @@ export const authSignup = (username, email, Password1, Password2) => {
     return dispatch => {
         dispatch(authStart());
 
-        axios.post('http://127.0.0.1:8000/rest-auth/register/', {
+        axios.post('http://127.0.0.1:8000/rest-auth/registration/', {
             username: username,
             email: email,
             Password1: Password1,
