@@ -1,21 +1,12 @@
-<<<<<<< HEAD
 import React from 'react';
-=======
-import React, { Component } from 'react';
->>>>>>> c5539721de0569859d54088a480ed13d5675e649
 import { Input, Button, Spin, Form } from 'antd';
 import { NavLink } from 'react-router-dom';
 import Icon from '@ant-design/icons';
 
 // import { LoadingOutlined } from '@ant-design/icons';
 import { connect } from 'react-redux';
-<<<<<<< HEAD
 // import { Form } from '@ant-design/compatible';
 // import { authSignup } from './../../storage/actions/auth';
-=======
-
-import { authSignup } from './../../storage/actions/auth';
->>>>>>> c5539721de0569859d54088a480ed13d5675e649
 import * as actions from './../../storage/actions/auth';
 
 
@@ -32,102 +23,42 @@ const antIcon = <Icon type="loading" style={ { fontSize: 24 } } spin />;
 class RegistrationForm extends React.Component {
     state = {
         confirmDirty: false,
+        errorMessage : ""
 
     };
-<<<<<<< HEAD
-    handleSubmit = values => {
-        console.log('Success', values);
-        this.props.onAuth(values.username,values.password,values.email,values.confirm);
+    onFinish = values => {
+        if(values.password1 !== values.password2) {
+            this.setState({ errorMessage : "Passwords doesn't match" })
+        }else{
+            this.props.onAuth(values.username,values.email,values.password1,values.password1)
+        }
     } 
-        // e.preventDefault();
-        // this.props.form.validateFieldsAndScroll((err, values) => {
-        //     if (!err) {
-        //         console.log('Recieved values of form', values);
-        //         this.props.onAuth(values.username,
-        //             values.password,
-        //             values.email,
-        //             values.confirm
-        //         );
-        //     }
-        //     this.props.history.push('/');
-        // });//close handle submit
+    
+    onFinishFailed = errorInfo => {
+        console.log('Failed', errorInfo)
+    }
+        
     handleConfirmBlur = (e) => {
         const value = e.target.value;
         this.setState({
             confirmDirty: this.state.confirmDirty || !!value
         });
-=======
-    /* handleSubmit = (e) => {
-        e.preventDefault();
-        this.props.form.validateFields((err, values) => {
-            if (values) {
-                console.log('Recieved values of form', values);
-                this.props.onAuth(values.username,
-                    values.Password1,
-                    values.email,
-                    values.Password2
-                );
-            }
-            this.props.history.push('/');
-        }); */
-
-
-    //}//close handle submit
-    onFinish = values => {
-        console.log('Success Registration', values);
-        this.props.onAuth(values.username,
-            values.email,
-            values.Password1,
-            values.Password2)
-        this.props.history.push('/');
-
->>>>>>> c5539721de0569859d54088a480ed13d5675e649
     }
 
-    onFinishFailed = errorInfo => {
-        console.log('Failed', errorInfo)
-    }
 
-    handlePasswordChange = event => {
-        const Password1 = event.target.elements.Password1.value;
-        const Password2 = event.target.elements.Password2.value;
-        console.log(Password1, Password2)
-    };
-    handleConfirmPassword = event => {
-        if (event.handleConfirmPassword !== event.handlePasswordChange) {
-            this.message.error('error');
-        }
-    };
-
-    // handleConfirmBlur = (e) => {
-    //     const value = e.target.value;
-    //     this.setState({
-    //         confirmDirty: this.state.confirmDirty || !!value
-    //     });
-    // }
-
-    // compareToFirstPassword = (rule, value, callback) => {
-    //     const form = this.props.form;
-    //     if (value && value !== ('Password1')) {
-    //         callback('Two password that your enter is inconsistent')
-    //     } else {
-    //         callback();
+    // handlePasswordChange = (event) => {
+    //     console.log(event.value)
+    //     // const Password1 = event.target.value;
+    //     // const Password2 = event.target.elements.Password2.value;
+    //     // console.log(event)//, Password2)
+    // };
+    // handleConfirmPassword = event => {
+    //     if (event.handleConfirmPassword !== event.handlePasswordChange) {
+    //         this.message.error('error');
     //     }
-
-    // }
-    // validateToNextPassword = (rule, value, callback) => {
-    //     const form = this.props.form;
-    //     if (value && this.state.confirmDirty == ('Password1')) {
-
-    //     } else {
-    //         callback();
-    //     }
-
-    // }
-
-
-
-
+    //     console.log(event)//, Password2)
+    
+    // };
 
     render() {
         const layout = {
@@ -157,15 +88,8 @@ class RegistrationForm extends React.Component {
                 { this.props.loading ?
                     <Spin indicator={ antIcon } />
                     :
-<<<<<<< HEAD
-                    <Form   { ...layout }
-                        onFinish={ this.handleSubmit } className="login-form">
-
-                        <Form.Item style={ { height: '50px' } }>
-=======
                     <Form   { ...layout } name="normal_login"
                         onFinish={ this.onFinish } onFinishFailed={ this.onFinishFailed } className="login-form">
->>>>>>> c5539721de0569859d54088a480ed13d5675e649
 
                         <Form.Item
                             label="Username"
@@ -191,12 +115,13 @@ class RegistrationForm extends React.Component {
 
                         <Form.Item
                             label="Password"
-                            name="Password1"
+                            value = "password"
+                            name="password1"
                             style={ { height: '50px' } }
                             rules={ [{ required: true, message: 'Please input your password!', },
-                            {
-                                validator: this.handlePasswordChange,
-                            }
+                            // {
+                            //     validator: this.handlePasswordChange,
+                            // }
 
                             ]
                             }
@@ -206,19 +131,19 @@ class RegistrationForm extends React.Component {
 
                         <Form.Item
                             label="confirm"
-                            name="Password2"
+                            name="password2"
                             style={ { height: '50px' } }
                             rules={ [{ required: true, message: 'Please input your confirm!', },
-                            {
-                                validator: this.handleConfirmPassword,
-                            }
+                            // {
+                            //     validator: this.handleConfirmPassword,
+                            // }
 
                             ]
                             }
                         >
                             <Input />
                         </Form.Item>
-
+                        <p style={{'color': 'red'}}> { this.state.errorMessage } </p>
                         <Form.Item { ...tailLayout } style={ { marginRight: '510px' } }>
                             <Button type="primary" htmlType="submit" >
                                 Signup
@@ -234,11 +159,7 @@ class RegistrationForm extends React.Component {
         );
     }
 }
-<<<<<<< HEAD
-// const WrappedNormalLoginForm = Form.create()(RegistrationForm);
-=======
 
->>>>>>> c5539721de0569859d54088a480ed13d5675e649
 const mapStateToProps = (state) => {
     return {
         loading: state.loading,

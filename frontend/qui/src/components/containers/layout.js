@@ -21,18 +21,10 @@ class CustomeLayout extends React.Component {
                     <Menu theme="dark" mode="horizontal" defaultSelectedKeys={ ['2'] }>
 
                         {
-<<<<<<< HEAD
                             this.props.isAuthenticated ? 
                                 <Menu.Item key="1" onClick={ this.props.logout }>Logout</Menu.Item>
                             :
-=======
-                            this.props.isAuthenticated ?
-
-                                <Menu.Item key="1" onClick={ this.props.logout }> Logout<Link to="/login"></Link>
-                                </Menu.Item>
-                                :
->>>>>>> c5539721de0569859d54088a480ed13d5675e649
-                                <Menu.Item key="1"><Link to="/login">Login</Link></Menu.Item>
+                                <Menu.Item key="17"><Link to="/login">Login</Link></Menu.Item>
 
                         }
                         <Menu.Item key="2"><Link to="/">posts</Link></Menu.Item>
