@@ -10,7 +10,7 @@ import * as actions from './../../storage/actions/auth';
 
 const { Header, Content, Footer } = Layout;
 
-class customeLayout extends React.Component {
+class CustomeLayout extends React.Component {
     render() {
 
         return (
@@ -21,9 +21,17 @@ class customeLayout extends React.Component {
                     <Menu theme="dark" mode="horizontal" defaultSelectedKeys={ ['2'] }>
 
                         {
+<<<<<<< HEAD
                             this.props.isAuthenticated ? 
                                 <Menu.Item key="1" onClick={ this.props.logout }>Logout</Menu.Item>
                             :
+=======
+                            this.props.isAuthenticated ?
+
+                                <Menu.Item key="1" onClick={ this.props.logout }> Logout<Link to="/login"></Link>
+                                </Menu.Item>
+                                :
+>>>>>>> c5539721de0569859d54088a480ed13d5675e649
                                 <Menu.Item key="1"><Link to="/login">Login</Link></Menu.Item>
 
                         }
@@ -58,5 +66,5 @@ const mapDispatchToProps = (dispach) => {
     }
 }
 
-export default withRouter(connect(null, mapDispatchToProps)(customeLayout));
+export default withRouter(connect(null, mapDispatchToProps)(CustomeLayout));
 

@@ -5,8 +5,12 @@ import Icon from '@ant-design/icons';
 
 // import { LoadingOutlined } from '@ant-design/icons';
 import { connect } from 'react-redux';
+<<<<<<< HEAD
 // import { Form } from '@ant-design/compatible';
 // import { authLogin } from './../../storage/actions/auth';
+=======
+import { authLogin } from './../../storage/actions/auth';
+>>>>>>> c5539721de0569859d54088a480ed13d5675e649
 import * as actions from './../../storage/actions/auth';
 
 const antIcon = (
@@ -19,6 +23,7 @@ const antIcon = (
 
 
 class NormalLoginForm extends React.Component {
+<<<<<<< HEAD
 
     // handleSubmit = (e) => {
     //     e.preventDefault();
@@ -34,6 +39,30 @@ class NormalLoginForm extends React.Component {
     //         }
 
     //     });
+=======
+    // handleSubmit = (e) => {
+    //     e.preventDefault();
+    //     this.props.form.validateFields((err, values) => {
+    //         if (values != "") {
+    //             console.log('Recieved values of form', values);
+    //             this.props.onAuth(values.username, values.password);
+    //             this.props.history.push('/');
+    //         }
+
+    //     });
+
+    //}//close handle submit
+    onFinish = values => {
+        console.log('Success', values);
+        this.props.onAuth(values.username, values.password)
+        this.props.history.push('/');
+
+    }
+
+    onFinishFailed = errorInfo => {
+        console.log('Failed', errorInfo)
+    }
+>>>>>>> c5539721de0569859d54088a480ed13d5675e649
 
     // }
 
@@ -72,7 +101,13 @@ class NormalLoginForm extends React.Component {
 
                 { this.props.loading ?
                     <Spin indicator={ antIcon } />
+<<<<<<< HEAD
                     : (<Form   { ...layout } name='loginForm' onFinish={ this.onFinish } onFinishFailed={ this.onFinishFailed } className="login-form">
+=======
+                    :
+
+                    <Form   { ...layout } name='loginForm' onFinish={ this.onFinish } onFinishFailed={ this.onFinishFailed } className="login-form">
+>>>>>>> c5539721de0569859d54088a480ed13d5675e649
 
                         <Form.Item
                             label = "Username"
@@ -101,7 +136,10 @@ class NormalLoginForm extends React.Component {
         );
     }
 }
+<<<<<<< HEAD
 // const WrappedNormalLoginForm = Form.create()(NormalLoginForm);
+=======
+>>>>>>> c5539721de0569859d54088a480ed13d5675e649
 
 const mapStateToProps = (state) => {
     return {

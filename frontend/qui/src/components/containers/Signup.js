@@ -1,12 +1,21 @@
+<<<<<<< HEAD
 import React from 'react';
+=======
+import React, { Component } from 'react';
+>>>>>>> c5539721de0569859d54088a480ed13d5675e649
 import { Input, Button, Spin, Form } from 'antd';
 import { NavLink } from 'react-router-dom';
 import Icon from '@ant-design/icons';
 
 // import { LoadingOutlined } from '@ant-design/icons';
 import { connect } from 'react-redux';
+<<<<<<< HEAD
 // import { Form } from '@ant-design/compatible';
 // import { authSignup } from './../../storage/actions/auth';
+=======
+
+import { authSignup } from './../../storage/actions/auth';
+>>>>>>> c5539721de0569859d54088a480ed13d5675e649
 import * as actions from './../../storage/actions/auth';
 
 
@@ -23,7 +32,9 @@ const antIcon = <Icon type="loading" style={ { fontSize: 24 } } spin />;
 class RegistrationForm extends React.Component {
     state = {
         confirmDirty: false,
+
     };
+<<<<<<< HEAD
     handleSubmit = values => {
         console.log('Success', values);
         this.props.onAuth(values.username,values.password,values.email,values.confirm);
@@ -45,24 +56,76 @@ class RegistrationForm extends React.Component {
         this.setState({
             confirmDirty: this.state.confirmDirty || !!value
         });
-    }
-    compareToFirstPassword = (rule, value, callback) => {
-        const form = this.props.form;
-        if (value && value !== form.getFieldValue('password')) {
-            callback('Two password that your enter is inconsistent')
-        } else {
-            callback();
-        }
+=======
+    /* handleSubmit = (e) => {
+        e.preventDefault();
+        this.props.form.validateFields((err, values) => {
+            if (values) {
+                console.log('Recieved values of form', values);
+                this.props.onAuth(values.username,
+                    values.Password1,
+                    values.email,
+                    values.Password2
+                );
+            }
+            this.props.history.push('/');
+        }); */
 
-    }
-    validateToNextPassword = (rule, value, callback) => {
-        const form = this.props.form;
-        if (value && this.state.confirmDirty) {
-            form.validateFields(['confirm'], { force: true });
 
-        }
-        callback();
+    //}//close handle submit
+    onFinish = values => {
+        console.log('Success Registration', values);
+        this.props.onAuth(values.username,
+            values.email,
+            values.Password1,
+            values.Password2)
+        this.props.history.push('/');
+
+>>>>>>> c5539721de0569859d54088a480ed13d5675e649
     }
+
+    onFinishFailed = errorInfo => {
+        console.log('Failed', errorInfo)
+    }
+
+    handlePasswordChange = event => {
+        const Password1 = event.target.elements.Password1.value;
+        const Password2 = event.target.elements.Password2.value;
+        console.log(Password1, Password2)
+    };
+    handleConfirmPassword = event => {
+        if (event.handleConfirmPassword !== event.handlePasswordChange) {
+            this.message.error('error');
+        }
+    };
+
+    // handleConfirmBlur = (e) => {
+    //     const value = e.target.value;
+    //     this.setState({
+    //         confirmDirty: this.state.confirmDirty || !!value
+    //     });
+    // }
+
+    // compareToFirstPassword = (rule, value, callback) => {
+    //     const form = this.props.form;
+    //     if (value && value !== ('Password1')) {
+    //         callback('Two password that your enter is inconsistent')
+    //     } else {
+    //         callback();
+    //     }
+
+    // }
+    // validateToNextPassword = (rule, value, callback) => {
+    //     const form = this.props.form;
+    //     if (value && this.state.confirmDirty == ('Password1')) {
+
+    //     } else {
+    //         callback();
+    //     }
+
+    // }
+
+
 
 
 
@@ -85,7 +148,7 @@ class RegistrationForm extends React.Component {
             )
         }
 
-        const { getFieldDecorator } = this.props.form;
+        // const { getFieldDecorator } = this.props.form;
 
         return (
             <div>
@@ -94,67 +157,67 @@ class RegistrationForm extends React.Component {
                 { this.props.loading ?
                     <Spin indicator={ antIcon } />
                     :
+<<<<<<< HEAD
                     <Form   { ...layout }
                         onFinish={ this.handleSubmit } className="login-form">
 
                         <Form.Item style={ { height: '50px' } }>
+=======
+                    <Form   { ...layout } name="normal_login"
+                        onFinish={ this.onFinish } onFinishFailed={ this.onFinishFailed } className="login-form">
+>>>>>>> c5539721de0569859d54088a480ed13d5675e649
 
+                        <Form.Item
+                            label="Username"
+                            name="username"
+
+                            style={ { height: '50px' } }
+                            rules={ [{ required: true, message: 'Please input your username!' }]
+                            }
+                        >
+                            <Input />
+                        </Form.Item>
+
+                        <Form.Item
+                            label="Email"
+                            name="email"
+                            style={ { height: '50px' } }
+                            rules={ [{ required: true, message: 'Please input your email!' }]
+                            }
+                        >
+                            <Input />
+                        </Form.Item>
+
+
+                        <Form.Item
+                            label="Password"
+                            name="Password1"
+                            style={ { height: '50px' } }
+                            rules={ [{ required: true, message: 'Please input your password!', },
                             {
-                                getFieldDecorator('username', {
-                                    rules: [{
-                                        required: true, message: 'Please input your username!',
-                                    }, {
-                                        validator: this.validateToNextPassword,
-                                    }
-                                    ],
-                                })
-                                    (<Input prefix={ <Icon type="username" style={ { color: 'rgba(0,0,0,.25)' } } /> } placeholder="Username" />)
+                                validator: this.handlePasswordChange,
                             }
+
+                            ]
+                            }
+                        >
+                            <Input />
                         </Form.Item>
 
-                        <Form.Item style={ { height: '50px' } }>
-                            { getFieldDecorator('email', {
-                                rules: [{
-                                    required: true, message: 'Please input your email!',
-                                }, {
-                                    requird: true, message: "pls input your email",
-                                }
-                                ],
-                            })
-
-                                (<Input prefix={ <Icon type="email" style={ { color: 'rgba(0,0,0,.25)' } } /> } placeholder="Email Address" />)
+                        <Form.Item
+                            label="confirm"
+                            name="Password2"
+                            style={ { height: '50px' } }
+                            rules={ [{ required: true, message: 'Please input your confirm!', },
+                            {
+                                validator: this.handleConfirmPassword,
                             }
-                        </Form.Item>
 
-                        <Form.Item style={ { height: '50px' } }>
-                            { getFieldDecorator('password', {
-                                rules: [{
-                                    required: true, message: 'Please input your password!',
-                                }, {
-                                    validator: this.validateToNextPassword,
-                                }
-                                ],
-                            })
-                                (<Input prefix={ <Icon type="lock" style={ { color: 'rgba(0,0,0,.25)' } } /> } placeholder="Passsword" />)
+                            ]
                             }
+                        >
+                            <Input />
                         </Form.Item>
-
-
-
-                        <Form.Item style={ { height: '50px' } }>
-                            { getFieldDecorator('confirm', {
-                                rules: [{
-                                    required: true, message: 'Please input your confirm password!',
-                                }, {
-                                    validator: this.compareToFirstPassword,
-                                }
-                                ],
-                            })
-                                (<Input prefix={ <Icon type="lock" style={ { color: 'rgba(0,0,0,.25)' } } /> } placeholder=" Confirm Passsword" />)
-                            }
-                        </Form.Item>
-
-
 
                         <Form.Item { ...tailLayout } style={ { marginRight: '510px' } }>
                             <Button type="primary" htmlType="submit" >
@@ -171,7 +234,11 @@ class RegistrationForm extends React.Component {
         );
     }
 }
+<<<<<<< HEAD
 // const WrappedNormalLoginForm = Form.create()(RegistrationForm);
+=======
+
+>>>>>>> c5539721de0569859d54088a480ed13d5675e649
 const mapStateToProps = (state) => {
     return {
         loading: state.loading,
